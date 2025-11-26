@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resume Skill Analyzer</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        textarea { width: 100%; height: 200px; }
+        .result { margin-top: 20px; padding: 15px; background: #f0f0f0; }
+    </style>
+</head>
+<body>
+
+<h1>Resume Skill Analyzer</h1>
+
+<form method="POST">
+    <label>Paste Resume Text:</label><br><br>
+    <textarea name="resume">{{ resume_text }}</textarea><br><br>
+
+    <button type="submit">Analyze</button>
+</form>
+
+{% if top_skills %}
+<div class="result">
+    <h3>Top 2 Skills Identified:</h3>
+    <ul>
+        {% for skill in top_skills %}
+        <li>{{ skill }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+</body>
+</html>
