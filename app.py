@@ -20,16 +20,14 @@ def index():
 # ------------------------------
 @app.route("/api/extract_skills", methods=["POST"])
 def api_extract_skills():
-    data = request.get_json()
+    resume_text = request.data.decode("utf-8")  # Read plain text body
 
-    if not data or "resume" not in data:
-        return jsonify({"error": "Missing 'resume' field"}), 400
-
-    resume_text = data["resume"]
     top_skills = extract_skills(resume_text)
 
-    return jsonify({"top_skills": top_skills})
+    return ", ".join(top_skills)  # Return plain text
+
 
 
 if __name__ == "__main__":
     app.run(debug=True)
+
