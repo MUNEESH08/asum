@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from skills import extract_skills
 
 app = Flask(__name__)
@@ -13,6 +13,22 @@ def index():
         top_skills = extract_skills(resume_text)
 
     return render_template("index.html", top_skills=top_skills, resume_text=resume_text)
+
+
+# ------------------------------
+# NEW API ENDPOINT
+# ------------------------------
+@app.route("/api/extract_skills", methods=["POST"])
+def api_extract_skills():
+    data = request.get_json()
+
+    if not data or "resume" not in data:
+        return jsonify({"error": "Missing 'resume' field"}), 400
+
+    resume_text = data["resume"]
+    top_skills = extract_skills(resume_text)
+
+    return jsonify({"top_skills": top_skills})
 
 
 if __name__ == "__main__":
